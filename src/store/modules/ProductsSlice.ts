@@ -1,21 +1,43 @@
-import { createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
-import { RootState } from "..";
-import { apiGet } from "../../api";
-import { ProductType } from "../../types";
+import { createSlice } from "@reduxjs/toolkit";
 
-const adapter = createEntityAdapter<ProductType>({
-    selectId: (item)=> item.id
-})
+const initialState = "";
 
-export const {selectAll:selectProducts, selectById} = adapter.getSelectors((state:RootState)=> state.products);
+const ProductsSlice = createSlice({
+  name: "sliceName",
+  initialState,
+  reducers: {
+    create(state, action) {
+      return action.payload;
+    },
+    clear() {
+      return initialState;
+    },
+  },
+});
 
-export const productsGetAll = createAsyncThunk("products/GetAll",async () => {
-    const {data} = await apiGet("/products");
+export const { create, clear } = ProductsSlice.actions;
+export default ProductsSlice.reducer;
 
-    if (data.success === "OK") {
-        const { products } = data.data;
-        return products;
-      }
-    
-      return false;
-})
+// import { createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
+// import { RootState } from "..";
+// import { apiGet } from "../../api";
+// import { ProductType } from "../../types";
+
+// const adapter = createEntityAdapter<ProductType>({
+//   selectId: (item) => item.id,
+// });
+
+// export const { selectAll: selectProducts, selectById } = adapter.getSelectors(
+//   (state: RootState) => state.products
+// );
+
+// export const productsGetAll = createAsyncThunk("products/GetAll", async () => {
+//   const { data } = await apiGet("/products");
+
+//   if (data.success === "OK") {
+//     const { products } = data.data;
+//     return products;
+//   }
+
+//   return false;
+// });
