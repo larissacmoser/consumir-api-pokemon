@@ -24,7 +24,7 @@ const Products: React.FC = () => {
 
   const handleClick = () => {
     console.log("Executou");
-    dispatch(productsGetAll());
+    // dispatch(productsGetAll());
   };
 
   return (
