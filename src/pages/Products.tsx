@@ -1,14 +1,6 @@
-import React, { useEffect, useState } from "react";
-import {
-  Divider,
-  Grid,
-  IconButton,
-  InputBase,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
-
+import React, { useState } from "react";
+import { Grid, IconButton, InputBase, Paper, Typography } from "@mui/material";
+import Caroussel from "../components/Caroussel/Caroussel";
 import SearchIcon from "@mui/icons-material/Search";
 
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -16,31 +8,16 @@ import { pokemonGetOne } from "../store/modules/PokemonSlice";
 import { Container } from "@mui/system";
 
 const Products: React.FC = () => {
-  // const pokemonData = useAppSelector(pokemonGetOne);
   const [pokemon, setPokemon] = useState<string>("");
   const dispatch = useAppDispatch();
   const pokemonData = useAppSelector((state) => state.pokemon);
 
-  // useEffect(() => {
-  //   // dispatch(productsGetAll());
-  // }, []);
-
   const handleClick = () => {
-    console.log("Executou");
     dispatch(pokemonGetOne(pokemon));
-    // console.log(pokemon);
   };
 
   return (
-    <main
-      style={{
-        backgroundImage:
-          "url('https://c4.wallpaperflare.com/wallpaper/957/704/964/pokemon-fields-ruby-1920x1200-nature-fields-hd-art-wallpaper-preview.jpg')",
-        height: "100vh",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-      }}
-    >
+    <div>
       <Container maxWidth="md">
         <Grid
           container
@@ -51,7 +28,6 @@ const Products: React.FC = () => {
           }}
         >
           <Grid item xs={12} textAlign="center">
-            {/* <Typography variant="h5">Pokémons</Typography> */}
             <img
               src="https://www.freepnglogos.com/uploads/pokemon-logo-text-png-7.png"
               alt="pokemon logo"
@@ -83,11 +59,37 @@ const Products: React.FC = () => {
                 <SearchIcon />
               </IconButton>
             </Paper>
-            <Typography variant="h1">{pokemonData.name}</Typography>
+            {pokemonData.name && (
+              <Paper
+                sx={{ marginRight: "-7px", marginTop: "45px", padding: "47px" }}
+              >
+                <Grid container>
+                  <Grid item xs={6}>
+                    <Typography variant="h1">{pokemonData.name}</Typography>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <img
+                      src={pokemonData.sprites.front_default}
+                      alt=""
+                      width={"40%"}
+                    />
+                    <img
+                      src={pokemonData.sprites.back_default}
+                      alt=""
+                      width={"40%"}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Caroussel />
+                  </Grid>
+                </Grid>
+              </Paper>
+            )}
           </Grid>
         </Grid>
       </Container>
-    </main>
+    </div>
   );
 };
 
